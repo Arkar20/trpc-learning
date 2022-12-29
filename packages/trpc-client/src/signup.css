@@ -1,0 +1,12 @@
+input{
+    display: block;
+    margin :10px 0px;
+    width: 400px;
+    height: 20px;
+}
+button{
+    width: 80px;
+    height: 40px;
+    background: #000;
+    color: #fff;
+}

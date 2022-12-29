@@ -5,18 +5,22 @@ import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { trpc } from "./trpc/";
-
+import Signup from "./Signup";
 import "./index.css";
 
 const App = () => {
   const user = trpc.users.useQuery();
-
+  console.log(user.data);
   if (!user.data) {
     return <p>trpc fetching failed</p>;
   }
+  // if (!user.data.length) {
+  //   return <p>No user</p>;
+  // }
+
   return (
     <div className="container">
-      <div>Name: {user.data[0]?.email}</div>
+      <Signup />
     </div>
   );
 };

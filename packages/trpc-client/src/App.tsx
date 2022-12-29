@@ -7,19 +7,25 @@ import { httpBatchLink } from "@trpc/client";
 import { trpc } from "./trpc/";
 import Signup from "./Signup";
 import "./index.css";
-
+let render = 1;
 const App = () => {
   const user = trpc.users.useQuery();
-  console.log(user.data);
-  if (!user.data) {
+  console.log(user);
+
+  console.log(render++);
+  if (user.isError) {
     return <p>trpc fetching failed</p>;
   }
-  // if (!user.data.length) {
-  //   return <p>No user</p>;
-  // }
 
   return (
     <div className="container">
+      {user.data && (
+        <ul>
+          {user.data.map((user, index) => {
+            return <li key={index}>{user.email}</li>;
+          })}
+        </ul>
+      )}
       <Signup />
     </div>
   );

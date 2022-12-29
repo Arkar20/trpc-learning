@@ -1,12 +1,11 @@
 import { router, procedure } from "../trpc-setup";
 import { z } from "zod";
 interface UserType {
-  id: string;
   email: string;
   password: string;
 }
 
-const users: UserType[] = [];
+let users: UserType[] = [];
 
 const getAllUsers = router({
   users: procedure.query((): UserType[] => {
@@ -21,8 +20,10 @@ const getAllUsers = router({
     )
     .mutation(({ input }) => {
       console.log("🚀 ~ file: User.model.ts:23 ~ .mutation ~ input", input);
-
+      const { email, password } = input;
+      users = [...users, { email, password }];
       return {
+        users,
         status: true,
       };
     }),

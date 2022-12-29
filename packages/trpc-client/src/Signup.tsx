@@ -1,7 +1,10 @@
 import React, { FormEvent, useMemo, useRef, useState } from "react";
 import "./signup.css";
 import { trpc } from "./trpc";
+
 export default function Signup() {
+  const user = trpc.users.useQuery();
+
   const signUp = trpc.createUser.useMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,7 +12,9 @@ export default function Signup() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    signUp.mutateAsync({ email, password });
+    signUp.mutateAsync({ email, password }).then((result) => {
+      user.refetch();
+    });
   };
 
   const errors = useMemo(() => {

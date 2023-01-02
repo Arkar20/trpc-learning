@@ -16,6 +16,7 @@ const getAllUsers = router({
   users: adminProcedure.query(({ ctx }): UserType[] => {
     return users;
   }),
+
   createUser: procedure
     .input(
       z.object({

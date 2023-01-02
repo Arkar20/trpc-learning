@@ -1,14 +1,19 @@
 import { router, procedure } from "../trpc-setup";
 import { z } from "zod";
+import jwt from "jsonwebtoken";
+import { auth } from "../middleware/auth";
+
 interface UserType {
   email: string;
   password: string;
 }
 
+const adminProcedure = procedure.use(auth);
+
 let users: UserType[] = [];
 
 const getAllUsers = router({
-  users: procedure.query((): UserType[] => {
+  users: adminProcedure.query(({ ctx }): UserType[] => {
     return users;
   }),
   createUser: procedure
@@ -18,10 +23,19 @@ const getAllUsers = router({
         password: z.string(),
       })
     )
-    .mutation(({ input }) => {
-      console.log("🚀 ~ file: User.model.ts:23 ~ .mutation ~ input", input);
+    .mutation(({ ctx, input }) => {
       const { email, password } = input;
+
       users = [...users, { email, password }];
+
+      const token = jwt.sign({ email }, "hello");
+
+      ctx.res.cookie("access_token", token, {
+        maxAge: 60000,
+        httpOnly: true,
+        secure: true,
+      });
+
       return {
         users,
         status: true,

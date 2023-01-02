@@ -13,6 +13,7 @@ const App = () => {
   console.log(user);
 
   console.log(render++);
+
   if (user.isError) {
     return <p>trpc fetching failed</p>;
   }
@@ -38,6 +39,12 @@ const TrpcApp = () => {
       links: [
         httpBatchLink({
           url: "http://localhost:8080/trpc",
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
         }),
       ],
     })

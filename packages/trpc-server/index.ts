@@ -2,7 +2,8 @@ import express from "express";
 import { inferAsyncReturnType } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import cors from "cors";
-
+import cookieParser from "cookie-parser";
+import { createContext } from "./trpc-setup";
 import { getAllUsers } from "./model/index";
 import { mergeRouter } from "./trpc-setup";
 
@@ -15,13 +16,17 @@ export type AppRouter = typeof appRouter;
 const app = express();
 const port = 8080;
 // created for each request
-const createContext = ({
-  req,
-  res,
-}: trpcExpress.CreateExpressContextOptions) => ({}); // no context
-type Context = inferAsyncReturnType<typeof createContext>;
+app.set("trust proxy", 1); // trust first proxy
 
-app.use(cors());
+app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
 app.use(
   "/trpc",
   trpcExpress.createExpressMiddleware({

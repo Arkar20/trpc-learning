@@ -4,7 +4,7 @@ import * as trpcExpress from "@trpc/server/adapters/express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { createContext } from "./trpc-setup";
-import { getAllUsers } from "./model/index";
+import { getAllUsers } from "./router/index";
 import { mergeRouter } from "./trpc-setup";
 
 const appRouter = mergeRouter(getAllUsers);

@@ -13,7 +13,8 @@ const App = () => {
 
   return (
     <div className="container">
-      {user.isError && <p>{user.error?.message}</p>}
+      <Signup />
+      {user.isFetched && user.isError && <p>{user.error?.message}</p>}
       {!user.isError && user.data && (
         <ul>
           {user.data.map((user, index) => {
@@ -21,7 +22,6 @@ const App = () => {
           })}
         </ul>
       )}
-      <Signup />
     </div>
   );
 };

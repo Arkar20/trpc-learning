@@ -26,8 +26,6 @@ export default function Signup() {
 
   return (
     <>
-      {signUp.isLoading && <p>Loading</p>}
-
       {errors && (
         <ul>
           {errors.map((error: any, index: number) => (

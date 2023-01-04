@@ -4,10 +4,10 @@ import * as trpcExpress from "@trpc/server/adapters/express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { createContext } from "./trpc-setup";
-import { getAllUsers } from "./router/index";
+import { userRouter, chatRouter } from "./router/index";
 import { mergeRouter } from "./trpc-setup";
 
-const appRouter = mergeRouter(getAllUsers);
+const appRouter = mergeRouter(userRouter, chatRouter);
 
 // Export type router type signature,
 // NOT the router itself.

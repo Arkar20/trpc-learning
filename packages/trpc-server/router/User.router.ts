@@ -1,5 +1,5 @@
 import { router, procedure } from "../trpc-setup";
-import { string, z } from "zod";
+import { z } from "zod";
 import jwt from "jsonwebtoken";
 import { auth } from "../middleware/auth";
 
@@ -15,7 +15,7 @@ const adminProcedure = procedure.use(auth);
 
 let users: UserType[] = [];
 
-const getAllUsers = router({
+const userRouter = router({
   users: adminProcedure.query(({ ctx }): UserType[] => {
     return users;
   }),
@@ -47,7 +47,7 @@ const getAllUsers = router({
       const token = jwt.sign(payload, "hello");
 
       ctx.res.cookie("access_token", token, {
-        maxAge: 60000,
+        maxAge: 6000000000,
         httpOnly: true,
         secure: true,
       });
@@ -59,4 +59,4 @@ const getAllUsers = router({
     }),
 });
 
-export { getAllUsers };
+export { userRouter };

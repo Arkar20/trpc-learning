@@ -5,10 +5,14 @@ declare global {
   namespace Express {
     interface Request {
       user: {
-        email?: string;
+        email: string;
       };
     }
   }
+}
+
+interface JwtPayload {
+  email: string;
 }
 export const createContext = ({
   req,
@@ -18,7 +22,8 @@ export const createContext = ({
 
   let user;
   try {
-    const decoded = jwt.verify(access_token, "hello");
+    const decoded = jwt.verify(access_token, "hello") as JwtPayload;
+
     user = decoded;
   } catch (err) {
     user = null;

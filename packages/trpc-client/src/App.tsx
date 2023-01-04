@@ -7,6 +7,8 @@ import { httpBatchLink } from "@trpc/client";
 import { trpc } from "./trpc/";
 import Signup from "./Signup";
 import CurrentUser from "./CurrentUser";
+import Chat from "./Chat";
+
 import "./index.css";
 
 const App = () => {
@@ -25,6 +27,8 @@ const App = () => {
       )}
 
       <CurrentUser />
+
+      <Chat />
     </div>
   );
 };

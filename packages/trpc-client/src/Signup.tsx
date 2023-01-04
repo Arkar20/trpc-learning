@@ -5,6 +5,8 @@ import { trpc } from "./trpc";
 export default function Signup() {
   const user = trpc.users.useQuery();
 
+  const singleUser = trpc.getSingleUser.useQuery();
+
   const signUp = trpc.createUser.useMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +16,7 @@ export default function Signup() {
 
     signUp.mutateAsync({ email, password }).then((result) => {
       user.refetch();
+      singleUser.refetch();
     });
   };
 

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { trpc } from "./trpc/";
 import Signup from "./Signup";
+import CurrentUser from "./CurrentUser";
 import "./index.css";
 
 const App = () => {
@@ -22,6 +23,8 @@ const App = () => {
           })}
         </ul>
       )}
+
+      <CurrentUser />
     </div>
   );
 };

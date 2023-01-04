@@ -3,9 +3,7 @@ import "./signup.css";
 import { trpc } from "./trpc";
 
 export default function Signup() {
-  const user = trpc.users.useQuery();
-
-  const singleUser = trpc.getSingleUser.useQuery();
+  const utils = trpc.useContext();
 
   const signUp = trpc.createUser.useMutation();
   const [email, setEmail] = useState("");
@@ -15,8 +13,8 @@ export default function Signup() {
     e.preventDefault();
 
     signUp.mutateAsync({ email, password }).then((result) => {
-      user.refetch();
-      singleUser.refetch();
+      utils.users.refetch();
+      utils.getSingleUser.refetch();
     });
   };
 

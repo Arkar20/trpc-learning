@@ -5,33 +5,9 @@ import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { trpc } from "./trpc/";
-import Signup from "./Signup";
-import CurrentUser from "./CurrentUser";
-import Chat from "./Chat";
 
-import "./index.css";
-
-const App = () => {
-  const user = trpc.users.useQuery(undefined, { retry: false });
-
-  return (
-    <div className="container">
-      <Signup />
-      {user.isFetched && user.isError && <p>{user.error?.message}</p>}
-      {!user.isError && user.data && (
-        <ul>
-          {user.data.map((user, index) => {
-            return <li key={index}>{user.email}</li>;
-          })}
-        </ul>
-      )}
-
-      <CurrentUser />
-
-      <Chat />
-    </div>
-  );
-};
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
 
 const TrpcApp = () => {
   const [queryClient] = useState(() => new QueryClient());
@@ -54,7 +30,7 @@ const TrpcApp = () => {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <RouterProvider router={router}></RouterProvider>
       </QueryClientProvider>
     </trpc.Provider>
   );

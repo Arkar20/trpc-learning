@@ -1,8 +1,8 @@
-import { trpc } from "./trpc";
+import { trpc } from "../trpc";
 
 import React from "react";
 
-export default function CurrentUser() {
+export function CurrentUser() {
   const singleUser = trpc.getSingleUser.useQuery(undefined, {
     retry: 0,
   });

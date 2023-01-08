@@ -1,6 +1,7 @@
 import React from "react";
-import { trpc } from "./trpc";
-export default function Chat() {
+import { trpc } from "../trpc";
+import { Link } from "react-router-dom";
+export function Chat() {
   const chats = trpc.getAllChats.useQuery();
   const createChat = trpc.sendMessage.useMutation();
 
@@ -21,6 +22,7 @@ export default function Chat() {
 
   return (
     <>
+      <Link to="/sign-up">Go Back Sign Up</Link>
       <h5>Chat Box</h5>
       <ul>
         {chats.isSuccess &&

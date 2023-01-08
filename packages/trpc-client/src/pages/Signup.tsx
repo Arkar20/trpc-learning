@@ -1,8 +1,8 @@
-import React, { FormEvent, useMemo, useRef, useState } from "react";
-import "./signup.css";
-import { trpc } from "./trpc";
+import React, { FormEvent, useMemo, useState } from "react";
 
-export default function Signup() {
+import { trpc } from "../trpc";
+
+export function Signup() {
   const utils = trpc.useContext();
 
   const signUp = trpc.createUser.useMutation();
